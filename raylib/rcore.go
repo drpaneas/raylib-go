@@ -12,7 +12,7 @@ import (
 )
 
 // cptr returns C pointer
-func (v *Vector2) cptr() *C.Vector2 {
+func (v *Vector2[T]) cptr() *C.Vector2[T] {
 	return (*C.Vector2)(unsafe.Pointer(v))
 }
 
@@ -47,7 +47,7 @@ func (c *Camera) cptr() *C.Camera {
 }
 
 // cptr returns C pointer
-func (c *Camera2D) cptr() *C.Camera2D {
+func (c *Camera2D[T]) cptr() *C.Camera2D {
 	return (*C.Camera2D)(unsafe.Pointer(c))
 }
 
@@ -252,10 +252,10 @@ func GetCurrentMonitor() int {
 }
 
 // GetMonitorPosition - Get specified monitor position
-func GetMonitorPosition(monitor int) Vector2 {
+func GetMonitorPosition[T Number](monitor int) Vector2[T] {
 	cmonitor := (C.int)(monitor)
 	ret := C.GetMonitorPosition(cmonitor)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
@@ -300,16 +300,16 @@ func GetMonitorRefreshRate(monitor int) int {
 }
 
 // GetWindowPosition - Get window position XY on monitor
-func GetWindowPosition() Vector2 {
+func GetWindowPosition[T Number]() Vector2[T] {
 	ret := C.GetWindowPosition()
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
 // GetWindowScaleDPI - Get window scale DPI factor
-func GetWindowScaleDPI() Vector2 {
+func GetWindowScaleDPI[T Number]() Vector2[T] {
 	ret := C.GetWindowScaleDPI()
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
@@ -362,7 +362,7 @@ func EndDrawing() {
 }
 
 // BeginMode2D - Initialize 2D mode with custom camera
-func BeginMode2D(camera Camera2D) {
+func BeginMode2D[T Number](camera Camera2D[T]) {
 	ccamera := camera.cptr()
 	C.BeginMode2D(*ccamera)
 }
@@ -409,7 +409,7 @@ func EndScissorMode() {
 }
 
 // GetMouseRay - Returns a ray trace from mouse position
-func GetMouseRay(mousePosition Vector2, camera Camera) Ray {
+func GetMouseRay[T Number](mousePosition Vector2[T], camera Camera) Ray {
 	cmousePosition := mousePosition.cptr()
 	ccamera := camera.cptr()
 	ret := C.GetMouseRay(*cmousePosition, *ccamera)
@@ -426,7 +426,7 @@ func GetCameraMatrix(camera Camera) Matrix {
 }
 
 // GetCameraMatrix2D - Returns camera 2d transform matrix
-func GetCameraMatrix2D(camera Camera2D) Matrix {
+func GetCameraMatrix2D[T Number](camera Camera2D[T]) Matrix {
 	ccamera := camera.cptr()
 	ret := C.GetCameraMatrix2D(*ccamera)
 	v := newMatrixFromPointer(unsafe.Pointer(&ret))
@@ -434,40 +434,40 @@ func GetCameraMatrix2D(camera Camera2D) Matrix {
 }
 
 // GetWorldToScreen - Returns the screen space position from a 3d world space position
-func GetWorldToScreen(position Vector3, camera Camera) Vector2 {
+func GetWorldToScreen[T Number](position Vector3, camera Camera) Vector2[T] {
 	cposition := position.cptr()
 	ccamera := camera.cptr()
 	ret := C.GetWorldToScreen(*cposition, *ccamera)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
 // GetScreenToWorld2D - Returns the world space position for a 2d camera screen space position
-func GetScreenToWorld2D(position Vector2, camera Camera2D) Vector2 {
+func GetScreenToWorld2D[T Number](position Vector2[T], camera Camera2D[T]) Vector2[T] {
 	cposition := position.cptr()
 	ccamera := camera.cptr()
 	ret := C.GetScreenToWorld2D(*cposition, *ccamera)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
 // GetWorldToScreenEx - Get size position for a 3d world space position
-func GetWorldToScreenEx(position Vector3, camera Camera, width int32, height int32) Vector2 {
+func GetWorldToScreenEx[T Number](position Vector3, camera Camera, width int32, height int32) Vector2[T] {
 	cposition := position.cptr()
 	ccamera := camera.cptr()
 	cwidth := (C.int)(width)
 	cheight := (C.int)(height)
 	ret := C.GetWorldToScreenEx(*cposition, *ccamera, cwidth, cheight)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
 // GetWorldToScreen2D - Returns the screen space position for a 2d camera world space position
-func GetWorldToScreen2D(position Vector2, camera Camera2D) Vector2 {
+func GetWorldToScreen2D[T Number](position Vector2[T], camera Camera2D[T]) Vector2[T] {
 	cposition := position.cptr()
 	ccamera := camera.cptr()
 	ret := C.GetWorldToScreen2D(*cposition, *ccamera)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
@@ -833,16 +833,16 @@ func GetMouseY() int32 {
 }
 
 // GetMousePosition - Returns mouse position XY
-func GetMousePosition() Vector2 {
+func GetMousePosition[T Number]() Vector2[T] {
 	ret := C.GetMousePosition()
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
 // GetMouseDelta - Get mouse delta between frames
-func GetMouseDelta() Vector2 {
+func GetMouseDelta[T Number]() Vector2[T] {
 	ret := C.GetMouseDelta()
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
@@ -875,9 +875,9 @@ func GetMouseWheelMove() float32 {
 }
 
 // GetMouseWheelMoveV - Get mouse wheel movement for both X and Y
-func GetMouseWheelMoveV() Vector2 {
+func GetMouseWheelMoveV[T Number]() Vector2[T] {
 	ret := C.GetMouseWheelMoveV()
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
@@ -902,10 +902,10 @@ func GetTouchY() int32 {
 }
 
 // GetTouchPosition - Returns touch position XY for a touch point index (relative to screen size)
-func GetTouchPosition(index int32) Vector2 {
+func GetTouchPosition[T Number](index int32) Vector2[T] {
 	cindex := (C.int)(index)
 	ret := C.GetTouchPosition(cindex)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 

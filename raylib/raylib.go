@@ -466,19 +466,19 @@ var (
 )
 
 // Vector2 type
-type Vector2 struct {
-	X float32
-	Y float32
+type Vector2[T Number] struct {
+	X T
+	Y T
 }
 
 // NewVector2 - Returns new Vector2
-func NewVector2(x, y float32) Vector2 {
-	return Vector2{x, y}
+func NewVector2[T Number](x, y float32) Vector2[T] {
+	return Vector2[T]{T(x), T(y)}
 }
 
 // newVector2FromPointer - Returns new Vector2 from pointer
-func newVector2FromPointer(ptr unsafe.Pointer) Vector2 {
-	return *(*Vector2)(ptr)
+func newVector2FromPointer[T Number](ptr unsafe.Pointer) Vector2[T] {
+	return *(*Vector2[T])(ptr)
 }
 
 // Vector3 type
@@ -650,11 +650,11 @@ func newCamera3DFromPointer(ptr unsafe.Pointer) Camera3D {
 }
 
 // Camera2D type, defines a 2d camera
-type Camera2D struct {
+type Camera2D[T Number] struct {
 	// Camera offset (displacement from target)
-	Offset Vector2
+	Offset Vector2[T]
 	// Camera target (rotation and zoom origin)
-	Target Vector2
+	Target Vector2[T]
 	// Camera rotation in degrees
 	Rotation float32
 	// Camera zoom (scaling), should be 1.0f by default
@@ -662,13 +662,13 @@ type Camera2D struct {
 }
 
 // NewCamera2D - Returns new Camera2D
-func NewCamera2D(offset, target Vector2, rotation, zoom float32) Camera2D {
-	return Camera2D{offset, target, rotation, zoom}
+func NewCamera2D[T Number](offset, target Vector2[T], rotation, zoom float32) Camera2D[T] {
+	return Camera2D[T]{offset, target, rotation, zoom}
 }
 
 // newCamera2DFromPointer - Returns new Camera2D from pointer
-func newCamera2DFromPointer(ptr unsafe.Pointer) Camera2D {
-	return *(*Camera2D)(ptr)
+func newCamera2DFromPointer[T Number](ptr unsafe.Pointer) Camera2D[T] {
+	return *(*Camera2D[T])(ptr)
 }
 
 // BoundingBox type

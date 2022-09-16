@@ -97,7 +97,7 @@ func UnloadFont(font Font) {
 }
 
 // DrawText - Draw text (using default font)
-func DrawText(text string, posX int32, posY int32, fontSize int32, col color.RGBA) {
+func DrawText[X, Y, T Number](text string, posX X, posY Y, fontSize T, col color.RGBA) {
 	ctext := C.CString(text)
 	defer C.free(unsafe.Pointer(ctext))
 	cposX := (C.int)(posX)
@@ -108,7 +108,7 @@ func DrawText(text string, posX int32, posY int32, fontSize int32, col color.RGB
 }
 
 // DrawTextEx - Draw text using Font and additional parameters
-func DrawTextEx(font Font, text string, position Vector2, fontSize float32, spacing float32, tint color.RGBA) {
+func DrawTextEx[T Number](font Font, text string, position Vector2[T], fontSize float32, spacing float32, tint color.RGBA) {
 	cfont := font.cptr()
 	ctext := C.CString(text)
 	defer C.free(unsafe.Pointer(ctext))
@@ -120,7 +120,7 @@ func DrawTextEx(font Font, text string, position Vector2, fontSize float32, spac
 }
 
 // MeasureText - Measure string width for default font
-func MeasureText(text string, fontSize int32) int32 {
+func MeasureText[T Number](text string, fontSize T) int32 {
 	ctext := C.CString(text)
 	defer C.free(unsafe.Pointer(ctext))
 	cfontSize := (C.int)(fontSize)
@@ -130,19 +130,19 @@ func MeasureText(text string, fontSize int32) int32 {
 }
 
 // MeasureTextEx - Measure string size for Font
-func MeasureTextEx(font Font, text string, fontSize float32, spacing float32) Vector2 {
+func MeasureTextEx[T Number](font Font, text string, fontSize float32, spacing float32) Vector2[T] {
 	cfont := font.cptr()
 	ctext := C.CString(text)
 	defer C.free(unsafe.Pointer(ctext))
 	cfontSize := (C.float)(fontSize)
 	cspacing := (C.float)(spacing)
 	ret := C.MeasureTextEx(*cfont, ctext, cfontSize, cspacing)
-	v := newVector2FromPointer(unsafe.Pointer(&ret))
+	v := newVector2FromPointer[T](unsafe.Pointer(&ret))
 	return v
 }
 
 // GetGlyphIndex - Get glyph index position in font for a codepoint (unicode character), fallback to '?' if not found
-func GetGlyphIndex(font Font, codepoint int32) int32 {
+func GetGlyphIndex[T Number](font Font, codepoint T) int32 {
 	cfont := font.cptr()
 	ccodepoint := (C.int)(codepoint)
 	ret := C.GetGlyphIndex(*cfont, ccodepoint)
@@ -151,7 +151,7 @@ func GetGlyphIndex(font Font, codepoint int32) int32 {
 }
 
 // GetGlyphInfo - Get glyph font info data for a codepoint (unicode character), fallback to '?' if not found
-func GetGlyphInfo(font Font, codepoint int32) GlyphInfo {
+func GetGlyphInfo[T Number](font Font, codepoint T) GlyphInfo {
 	cfont := font.cptr()
 	ccodepoint := (C.int)(codepoint)
 	ret := C.GetGlyphInfo(*cfont, ccodepoint)
@@ -160,7 +160,7 @@ func GetGlyphInfo(font Font, codepoint int32) GlyphInfo {
 }
 
 // GetGlyphAtlasRec - Get glyph rectangle in font atlas for a codepoint (unicode character), fallback to '?' if not found
-func GetGlyphAtlasRec(font Font, codepoint int32) Rectangle {
+func GetGlyphAtlasRec[T Number](font Font, codepoint T) Rectangle {
 	cfont := font.cptr()
 	ccodepoint := (C.int)(codepoint)
 	ret := C.GetGlyphAtlasRec(*cfont, ccodepoint)
@@ -169,7 +169,7 @@ func GetGlyphAtlasRec(font Font, codepoint int32) Rectangle {
 }
 
 // DrawFPS - Shows current FPS
-func DrawFPS(posX int32, posY int32) {
+func DrawFPS[X, Y Number](posX X, posY Y) {
 	cposX := (C.int)(posX)
 	cposY := (C.int)(posY)
 	C.DrawFPS(cposX, cposY)

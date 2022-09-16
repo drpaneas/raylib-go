@@ -19,14 +19,14 @@ func DrawPixel(posX, posY int32, col color.RGBA) {
 }
 
 // DrawPixelV - Draw a pixel (Vector version)
-func DrawPixelV(position Vector2, col color.RGBA) {
+func DrawPixelV[T Number](position Vector2[T], col color.RGBA) {
 	cposition := position.cptr()
 	ccolor := colorCptr(col)
 	C.DrawPixelV(*cposition, *ccolor)
 }
 
 // DrawLine - Draw a line
-func DrawLine(startPosX, startPosY, endPosX, endPosY int32, col color.RGBA) {
+func DrawLine[T, U, X, Y Number](startPosX T, startPosY U, endPosX X, endPosY Y, col color.RGBA) {
 	cstartPosX := (C.int)(startPosX)
 	cstartPosY := (C.int)(startPosY)
 	cendPosX := (C.int)(endPosX)
@@ -36,7 +36,7 @@ func DrawLine(startPosX, startPosY, endPosX, endPosY int32, col color.RGBA) {
 }
 
 // DrawLineV - Draw a line (Vector version)
-func DrawLineV(startPos, endPos Vector2, col color.RGBA) {
+func DrawLineV[T Number](startPos, endPos Vector2[T], col color.RGBA) {
 	cstartPos := startPos.cptr()
 	cendPos := endPos.cptr()
 	ccolor := colorCptr(col)
@@ -44,7 +44,7 @@ func DrawLineV(startPos, endPos Vector2, col color.RGBA) {
 }
 
 // DrawLineEx - Draw a line defining thickness
-func DrawLineEx(startPos, endPos Vector2, thick float32, col color.RGBA) {
+func DrawLineEx[T Number](startPos, endPos Vector2[T], thick float32, col color.RGBA) {
 	cstartPos := startPos.cptr()
 	cendPos := endPos.cptr()
 	cthick := (C.float)(thick)
@@ -53,7 +53,7 @@ func DrawLineEx(startPos, endPos Vector2, thick float32, col color.RGBA) {
 }
 
 // DrawLineBezier - Draw a line using cubic-bezier curves in-out
-func DrawLineBezier(startPos, endPos Vector2, thick float32, col color.RGBA) {
+func DrawLineBezier[T Number](startPos, endPos Vector2[T], thick float32, col color.RGBA) {
 	cstartPos := startPos.cptr()
 	cendPos := endPos.cptr()
 	cthick := (C.float)(thick)
@@ -62,7 +62,7 @@ func DrawLineBezier(startPos, endPos Vector2, thick float32, col color.RGBA) {
 }
 
 // DrawLineBezierQuad - Draw line using quadratic bezier curves with a control point
-func DrawLineBezierQuad(startPos Vector2, endPos Vector2, controlPos Vector2, thick float32, col color.RGBA) {
+func DrawLineBezierQuad[T Number](startPos Vector2[T], endPos Vector2[T], controlPos Vector2[T], thick float32, col color.RGBA) {
 	cstartPos := startPos.cptr()
 	cendPos := endPos.cptr()
 	ccontrolPos := controlPos.cptr()
@@ -72,7 +72,7 @@ func DrawLineBezierQuad(startPos Vector2, endPos Vector2, controlPos Vector2, th
 }
 
 // DrawLineBezierCubic - Draw line using cubic bezier curves with 2 contrl points
-func DrawLineBezierCubic(startPos Vector2, endPos Vector2, startControlPos Vector2, endControlPos Vector2, thick float32, col color.RGBA) {
+func DrawLineBezierCubic[T Number](startPos Vector2[T], endPos Vector2[T], startControlPos Vector2[T], endControlPos Vector2[T], thick float32, col color.RGBA) {
 	cstartPos := startPos.cptr()
 	cendPos := endPos.cptr()
 	cstartControlPos := startControlPos.cptr()
@@ -83,7 +83,7 @@ func DrawLineBezierCubic(startPos Vector2, endPos Vector2, startControlPos Vecto
 }
 
 // DrawLineStrip - Draw lines sequence
-func DrawLineStrip(points []Vector2, pointCount int32, col color.RGBA) {
+func DrawLineStrip[T Number](points []Vector2[T], pointCount int32, col color.RGBA) {
 	cpoints := (*C.Vector2)(unsafe.Pointer(&points[0]))
 	cpointCount := (C.int)(pointCount)
 	ccolor := colorCptr(col)
@@ -100,7 +100,7 @@ func DrawCircle(centerX, centerY int32, radius float32, col color.RGBA) {
 }
 
 // DrawCircleSector - Draw a piece of a circle
-func DrawCircleSector(center Vector2, radius, startAngle, endAngle float32, segments int32, col color.RGBA) {
+func DrawCircleSector[T Number](center Vector2[T], radius, startAngle, endAngle float32, segments int32, col color.RGBA) {
 	ccenter := center.cptr()
 	cradius := (C.float)(radius)
 	cstartAngle := (C.float)(startAngle)
@@ -111,7 +111,7 @@ func DrawCircleSector(center Vector2, radius, startAngle, endAngle float32, segm
 }
 
 // DrawCircleSectorLines -
-func DrawCircleSectorLines(center Vector2, radius, startAngle, endAngle float32, segments int32, col color.RGBA) {
+func DrawCircleSectorLines[T Number](center Vector2[T], radius, startAngle, endAngle float32, segments int32, col color.RGBA) {
 	ccenter := center.cptr()
 	cradius := (C.float)(radius)
 	cstartAngle := (C.float)(startAngle)
@@ -132,7 +132,7 @@ func DrawCircleGradient(centerX, centerY int32, radius float32, col1, col2 color
 }
 
 // DrawCircleV - Draw a color-filled circle (Vector version)
-func DrawCircleV(center Vector2, radius float32, col color.RGBA) {
+func DrawCircleV[T, U Number](center Vector2[T], radius U, col color.RGBA) {
 	ccenter := center.cptr()
 	cradius := (C.float)(radius)
 	ccolor := colorCptr(col)
@@ -169,7 +169,7 @@ func DrawEllipseLines(centerX, centerY int32, radiusH, radiusV float32, col colo
 }
 
 // DrawRing -
-func DrawRing(center Vector2, innerRadius, outerRadius, startAngle, endAngle float32, segments int32, col color.RGBA) {
+func DrawRing[T Number](center Vector2[T], innerRadius, outerRadius, startAngle, endAngle float32, segments int32, col color.RGBA) {
 	ccenter := center.cptr()
 	cinnerRadius := (C.float)(innerRadius)
 	couterRadius := (C.float)(outerRadius)
@@ -181,7 +181,7 @@ func DrawRing(center Vector2, innerRadius, outerRadius, startAngle, endAngle flo
 }
 
 // DrawRingLines -
-func DrawRingLines(center Vector2, innerRadius, outerRadius, startAngle, endAngle float32, segments int32, col color.RGBA) {
+func DrawRingLines[T Number](center Vector2[T], innerRadius, outerRadius, startAngle, endAngle float32, segments int32, col color.RGBA) {
 	ccenter := center.cptr()
 	cinnerRadius := (C.float)(innerRadius)
 	couterRadius := (C.float)(outerRadius)
@@ -193,7 +193,7 @@ func DrawRingLines(center Vector2, innerRadius, outerRadius, startAngle, endAngl
 }
 
 // DrawRectangle - Draw a color-filled rectangle
-func DrawRectangle(posX, posY, width, height int32, col color.RGBA) {
+func DrawRectangle[X, Y, W, H Number](posX X, posY Y, width W, height H, col color.RGBA) {
 	cposX := (C.int)(posX)
 	cposY := (C.int)(posY)
 	cwidth := (C.int)(width)
@@ -203,7 +203,7 @@ func DrawRectangle(posX, posY, width, height int32, col color.RGBA) {
 }
 
 // DrawRectangleV - Draw a color-filled rectangle (Vector version)
-func DrawRectangleV(position Vector2, size Vector2, col color.RGBA) {
+func DrawRectangleV[T Number](position Vector2[T], size Vector2[T], col color.RGBA) {
 	cposition := position.cptr()
 	csize := size.cptr()
 	ccolor := colorCptr(col)
@@ -218,7 +218,7 @@ func DrawRectangleRec(rec Rectangle, col color.RGBA) {
 }
 
 // DrawRectanglePro - Draw a color-filled rectangle with pro parameters
-func DrawRectanglePro(rec Rectangle, origin Vector2, rotation float32, col color.RGBA) {
+func DrawRectanglePro[T Number](rec Rectangle, origin Vector2[T], rotation float32, col color.RGBA) {
 	crec := rec.cptr()
 	corigin := origin.cptr()
 	crotation := (C.float)(rotation)
@@ -296,7 +296,7 @@ func DrawRectangleRoundedLines(rec Rectangle, roundness float32, segments, lineT
 }
 
 // DrawTriangle - Draw a color-filled triangle
-func DrawTriangle(v1, v2, v3 Vector2, col color.RGBA) {
+func DrawTriangle[T Number](v1, v2, v3 Vector2[T], col color.RGBA) {
 	cv1 := v1.cptr()
 	cv2 := v2.cptr()
 	cv3 := v3.cptr()
@@ -305,7 +305,7 @@ func DrawTriangle(v1, v2, v3 Vector2, col color.RGBA) {
 }
 
 // DrawTriangleLines - Draw triangle outline
-func DrawTriangleLines(v1, v2, v3 Vector2, col color.RGBA) {
+func DrawTriangleLines[T Number](v1, v2, v3 Vector2[T], col color.RGBA) {
 	cv1 := v1.cptr()
 	cv2 := v2.cptr()
 	cv3 := v3.cptr()
@@ -314,7 +314,7 @@ func DrawTriangleLines(v1, v2, v3 Vector2, col color.RGBA) {
 }
 
 // DrawTriangleFan - Draw a triangle fan defined by points
-func DrawTriangleFan(points []Vector2, col color.RGBA) {
+func DrawTriangleFan[T Number](points []Vector2[T], col color.RGBA) {
 	cpoints := (*C.Vector2)(unsafe.Pointer(&points[0]))
 	cpointsCount := (C.int)(int32(len(points)))
 	ccolor := colorCptr(col)
@@ -322,7 +322,7 @@ func DrawTriangleFan(points []Vector2, col color.RGBA) {
 }
 
 // DrawTriangleStrip - Draw a triangle strip defined by points
-func DrawTriangleStrip(points []Vector2, col color.RGBA) {
+func DrawTriangleStrip[T Number](points []Vector2[T], col color.RGBA) {
 	cpoints := (*C.Vector2)(unsafe.Pointer(&points[0]))
 	cpointsCount := (C.int)(int32(len(points)))
 	ccolor := colorCptr(col)
@@ -330,7 +330,7 @@ func DrawTriangleStrip(points []Vector2, col color.RGBA) {
 }
 
 // DrawPoly - Draw a regular polygon (Vector version)
-func DrawPoly(center Vector2, sides int32, radius, rotation float32, col color.RGBA) {
+func DrawPoly[T Number](center Vector2[T], sides int32, radius, rotation float32, col color.RGBA) {
 	ccenter := center.cptr()
 	csides := (C.int)(sides)
 	cradius := (C.float)(radius)
@@ -340,7 +340,7 @@ func DrawPoly(center Vector2, sides int32, radius, rotation float32, col color.R
 }
 
 // DrawPolyLines - Draw a polygon outline of n sides
-func DrawPolyLines(center Vector2, sides int32, radius, rotation float32, col color.RGBA) {
+func DrawPolyLines[T Number](center Vector2[T], sides int32, radius, rotation float32, col color.RGBA) {
 	ccenter := center.cptr()
 	csides := (C.int)(sides)
 	cradius := (C.float)(radius)
@@ -350,7 +350,7 @@ func DrawPolyLines(center Vector2, sides int32, radius, rotation float32, col co
 }
 
 // DrawPolyLinesEx - Draw a polygon outline of n sides with extended parameters
-func DrawPolyLinesEx(center Vector2, sides int32, radius float32, rotation float32, lineThick float32, col color.RGBA) {
+func DrawPolyLinesEx[T Number](center Vector2[T], sides int32, radius float32, rotation float32, lineThick float32, col color.RGBA) {
 	ccenter := center.cptr()
 	csides := (C.int)(sides)
 	cradius := (C.float)(radius)
@@ -370,7 +370,7 @@ func CheckCollisionRecs(rec1, rec2 Rectangle) bool {
 }
 
 // CheckCollisionCircles - Check collision between two circles
-func CheckCollisionCircles(center1 Vector2, radius1 float32, center2 Vector2, radius2 float32) bool {
+func CheckCollisionCircles[T Number](center1 Vector2[T], radius1 float32, center2 Vector2[T], radius2 float32) bool {
 	ccenter1 := center1.cptr()
 	cradius1 := (C.float)(radius1)
 	ccenter2 := center2.cptr()
@@ -381,7 +381,7 @@ func CheckCollisionCircles(center1 Vector2, radius1 float32, center2 Vector2, ra
 }
 
 // CheckCollisionCircleRec - Check collision between circle and rectangle
-func CheckCollisionCircleRec(center Vector2, radius float32, rec Rectangle) bool {
+func CheckCollisionCircleRec[T Number](center Vector2[T], radius float32, rec Rectangle) bool {
 	ccenter := center.cptr()
 	cradius := (C.float)(radius)
 	crec := rec.cptr()
@@ -391,7 +391,7 @@ func CheckCollisionCircleRec(center Vector2, radius float32, rec Rectangle) bool
 }
 
 // CheckCollisionPointRec - Check if point is inside rectangle
-func CheckCollisionPointRec(point Vector2, rec Rectangle) bool {
+func CheckCollisionPointRec[T Number](point Vector2[T], rec Rectangle) bool {
 	cpoint := point.cptr()
 	crec := rec.cptr()
 	ret := C.CheckCollisionPointRec(*cpoint, *crec)
@@ -400,7 +400,7 @@ func CheckCollisionPointRec(point Vector2, rec Rectangle) bool {
 }
 
 // CheckCollisionPointCircle - Check if point is inside circle
-func CheckCollisionPointCircle(point Vector2, center Vector2, radius float32) bool {
+func CheckCollisionPointCircle[T Number](point Vector2[T], center Vector2[T], radius float32) bool {
 	cpoint := point.cptr()
 	ccenter := center.cptr()
 	cradius := (C.float)(radius)
@@ -410,7 +410,7 @@ func CheckCollisionPointCircle(point Vector2, center Vector2, radius float32) bo
 }
 
 // CheckCollisionPointTriangle - Check if point is inside a triangle
-func CheckCollisionPointTriangle(point, p1, p2, p3 Vector2) bool {
+func CheckCollisionPointTriangle[T Number](point, p1, p2, p3 Vector2[T]) bool {
 	cpoint := point.cptr()
 	cp1 := p1.cptr()
 	cp2 := p2.cptr()
@@ -421,7 +421,7 @@ func CheckCollisionPointTriangle(point, p1, p2, p3 Vector2) bool {
 }
 
 // CheckCollisionLines - Check the collision between two lines defined by two points each, returns collision point by reference
-func CheckCollisionLines(startPos1, endPos1, startPos2, endPos2 Vector2, point *Vector2) bool {
+func CheckCollisionLines[T Number](startPos1, endPos1, startPos2, endPos2 Vector2[T], point *Vector2[T]) bool {
 	cstartPos1 := startPos1.cptr()
 	cendPos1 := endPos1.cptr()
 	cstartPos2 := startPos2.cptr()
@@ -433,7 +433,7 @@ func CheckCollisionLines(startPos1, endPos1, startPos2, endPos2 Vector2, point *
 }
 
 // CheckCollisionPointLine - Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
-func CheckCollisionPointLine(point, p1, p2 Vector2, threshold int32) bool {
+func CheckCollisionPointLine[T Number](point, p1, p2 Vector2[T], threshold int32) bool {
 	cpoint := point.cptr()
 	cp1 := p1.cptr()
 	cp2 := p2.cptr()

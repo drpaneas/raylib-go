@@ -395,7 +395,7 @@ func ImageDrawCircle(dst *Image, centerX, centerY, radius int32, col color.RGBA)
 }
 
 // ImageDrawCircleV - Draw circle within an image
-func ImageDrawCircleV(dst *Image, center Vector2, radius int32, col color.RGBA) {
+func ImageDrawCircleV[T Number](dst *Image, center Vector2[T], radius int32, col color.RGBA) {
 	cdst := dst.cptr()
 	ccenter := center.cptr()
 	cradius := (C.int)(radius)
@@ -413,7 +413,7 @@ func ImageDrawPixel(dst *Image, posX, posY int32, col color.RGBA) {
 }
 
 // ImageDrawPixelV - Draw pixel within an image (Vector version)
-func ImageDrawPixelV(dst *Image, position Vector2, col color.RGBA) {
+func ImageDrawPixelV[T Number](dst *Image, position Vector2[T], col color.RGBA) {
 	cdst := dst.cptr()
 	cposition := position.cptr()
 	ccolor := colorCptr(col)
@@ -432,7 +432,7 @@ func ImageDrawRectangle(dst *Image, x, y, width, height int32, col color.RGBA) {
 }
 
 // ImageDrawRectangleV - Draw rectangle within an image (Vector version)
-func ImageDrawRectangleV(dst *Image, position, size Vector2, col color.RGBA) {
+func ImageDrawRectangleV[T Number](dst *Image, position, size Vector2[T], col color.RGBA) {
 	cdst := dst.cptr()
 	cposition := position.cptr()
 	csize := size.cptr()
@@ -470,7 +470,7 @@ func ImageDrawText(dst *Image, posX, posY int32, text string, fontSize int32, co
 }
 
 // ImageDrawTextEx - Draw text (custom sprite font) within an image (destination)
-func ImageDrawTextEx(dst *Image, position Vector2, font Font, text string, fontSize, spacing float32, col color.RGBA) {
+func ImageDrawTextEx[T Number](dst *Image, position Vector2[T], font Font, text string, fontSize, spacing float32, col color.RGBA) {
 	cdst := dst.cptr()
 	cposition := position.cptr()
 	cfont := font.cptr()
@@ -596,7 +596,7 @@ func DrawTexture(texture Texture2D, posX int32, posY int32, tint color.RGBA) {
 }
 
 // DrawTextureV - Draw a Texture2D with position defined as Vector2
-func DrawTextureV(texture Texture2D, position Vector2, tint color.RGBA) {
+func DrawTextureV[T Number](texture Texture2D, position Vector2[T], tint color.RGBA) {
 	ctexture := texture.cptr()
 	cposition := position.cptr()
 	ctint := colorCptr(tint)
@@ -604,7 +604,7 @@ func DrawTextureV(texture Texture2D, position Vector2, tint color.RGBA) {
 }
 
 // DrawTextureEx - Draw a Texture2D with extended parameters
-func DrawTextureEx(texture Texture2D, position Vector2, rotation, scale float32, tint color.RGBA) {
+func DrawTextureEx[T Number](texture Texture2D, position Vector2[T], rotation, scale float32, tint color.RGBA) {
 	ctexture := texture.cptr()
 	cposition := position.cptr()
 	crotation := (C.float)(rotation)
@@ -614,7 +614,7 @@ func DrawTextureEx(texture Texture2D, position Vector2, rotation, scale float32,
 }
 
 // DrawTextureRec - Draw a part of a texture defined by a rectangle
-func DrawTextureRec(texture Texture2D, sourceRec Rectangle, position Vector2, tint color.RGBA) {
+func DrawTextureRec[T Number](texture Texture2D, sourceRec Rectangle, position Vector2[T], tint color.RGBA) {
 	ctexture := texture.cptr()
 	csourceRec := sourceRec.cptr()
 	cposition := position.cptr()
@@ -623,7 +623,7 @@ func DrawTextureRec(texture Texture2D, sourceRec Rectangle, position Vector2, ti
 }
 
 // DrawTextureQuad - Draw texture quad with tiling and offset parameters
-func DrawTextureQuad(texture Texture2D, tiling, offset Vector2, rectangle Rectangle, tint color.RGBA) {
+func DrawTextureQuad[T Number](texture Texture2D, tiling, offset Vector2[T], rectangle Rectangle, tint color.RGBA) {
 	ctexture := texture.cptr()
 	ctiling := tiling.cptr()
 	coffset := offset.cptr()
@@ -633,7 +633,7 @@ func DrawTextureQuad(texture Texture2D, tiling, offset Vector2, rectangle Rectan
 }
 
 // DrawTextureTiled - Draw part of a texture (defined by a rectangle) with rotation and scale tiled into dest
-func DrawTextureTiled(texture Texture2D, sourceRec, destRec Rectangle, origin Vector2, rotation float32, scale float32, tint color.RGBA) {
+func DrawTextureTiled[T Number](texture Texture2D, sourceRec, destRec Rectangle, origin Vector2[T], rotation float32, scale float32, tint color.RGBA) {
 	ctexture := texture.cptr()
 	csourceRec := sourceRec.cptr()
 	cdestRec := destRec.cptr()
@@ -645,7 +645,7 @@ func DrawTextureTiled(texture Texture2D, sourceRec, destRec Rectangle, origin Ve
 }
 
 // DrawTexturePro - Draw a part of a texture defined by a rectangle with 'pro' parameters
-func DrawTexturePro(texture Texture2D, sourceRec, destRec Rectangle, origin Vector2, rotation float32, tint color.RGBA) {
+func DrawTexturePro[T Number](texture Texture2D, sourceRec, destRec Rectangle, origin Vector2[T], rotation float32, tint color.RGBA) {
 	ctexture := texture.cptr()
 	csourceRec := sourceRec.cptr()
 	cdestRec := destRec.cptr()

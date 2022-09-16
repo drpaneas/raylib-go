@@ -5,89 +5,89 @@ import (
 )
 
 // Vector2Zero - Vector with components value 0.0
-func Vector2Zero() Vector2 {
-	return NewVector2(0.0, 0.0)
+func Vector2Zero[T Number]() Vector2[T] {
+	return NewVector2[T](0.0, 0.0)
 }
 
 // Vector2One - Vector with components value 1.0
-func Vector2One() Vector2 {
-	return NewVector2(1.0, 1.0)
+func Vector2One[T Number]() Vector2[T] {
+	return NewVector2[T](1.0, 1.0)
 }
 
 // Vector2Add - Add two vectors (v1 + v2)
-func Vector2Add(v1, v2 Vector2) Vector2 {
-	return NewVector2(v1.X+v2.X, v1.Y+v2.Y)
+func Vector2Add[T Number](v1, v2 Vector2[T]) Vector2[T] {
+	return NewVector2[T](float32(v1.X+v2.X), float32(v1.Y+v2.Y))
 }
 
 // Vector2Subtract - Subtract two vectors (v1 - v2)
-func Vector2Subtract(v1, v2 Vector2) Vector2 {
-	return NewVector2(v1.X-v2.X, v1.Y-v2.Y)
+func Vector2Subtract[T Number](v1, v2 Vector2[T]) Vector2[T] {
+	return NewVector2[T](float32(v1.X-v2.X), float32(v1.Y-v2.Y))
 }
 
 // Vector2Length - Calculate vector length
-func Vector2Length(v Vector2) float32 {
+func Vector2Length[T Number](v Vector2[T]) float32 {
 	return float32(math.Sqrt(float64((v.X * v.X) + (v.Y * v.Y))))
 }
 
 // Vector2DotProduct - Calculate two vectors dot product
-func Vector2DotProduct(v1, v2 Vector2) float32 {
-	return v1.X*v2.X + v1.Y*v2.Y
+func Vector2DotProduct[T Number](v1, v2 Vector2[T]) float32 {
+	return float32(v1.X*v2.X + v1.Y*v2.Y)
 }
 
 // Vector2Distance - Calculate distance between two vectors
-func Vector2Distance(v1, v2 Vector2) float32 {
+func Vector2Distance[T Number](v1, v2 Vector2[T]) float32 {
 	return float32(math.Sqrt(float64((v1.X-v2.X)*(v1.X-v2.X) + (v1.Y-v2.Y)*(v1.Y-v2.Y))))
 }
 
 // Vector2Angle - Calculate angle from two vectors in radians
-func Vector2Angle(v1, v2 Vector2) float32 {
+func Vector2Angle[T Number](v1, v2 Vector2[T]) float32 {
 	result := math.Atan2(float64(v2.Y), float64(v2.X)) - math.Atan2(float64(v1.Y), float64(v1.X))
 	return float32(result)
 }
 
 // Vector2Scale - Scale vector (multiply by value)
-func Vector2Scale(v Vector2, scale float32) Vector2 {
-	return NewVector2(v.X*scale, v.Y*scale)
+func Vector2Scale[T Number](v Vector2[T], scale float32) Vector2[T] {
+	return NewVector2[T](float32(v.X)*scale, float32(v.Y)*scale)
 }
 
 // Vector2Multiply - Multiply vector by vector
-func Vector2Multiply(v1, v2 Vector2) Vector2 {
-	return NewVector2(v1.X*v2.X, v1.Y*v2.Y)
+func Vector2Multiply[T Number](v1, v2 Vector2[T]) Vector2[T] {
+	return NewVector2[T](float32(v1.X*v2.X), float32(v1.Y*v2.Y))
 }
 
 // Vector2Negate - Negate vector
-func Vector2Negate(v Vector2) Vector2 {
-	return NewVector2(-v.X, -v.Y)
+func Vector2Negate[T Number](v Vector2[T]) Vector2[T] {
+	return NewVector2[T](float32(-v.X), float32(-v.Y))
 }
 
 // Vector2Divide - Divide vector by vector
-func Vector2DivideV(v1, v2 Vector2) Vector2 {
-	return NewVector2(v1.X/v2.X, v1.Y/v2.Y)
+func Vector2DivideV[T Number](v1, v2 Vector2[T]) Vector2[T] {
+	return NewVector2[T](float32(v1.X/v2.X), float32(v1.Y/v2.Y))
 }
 
 // Vector2Normalize - Normalize provided vector
-func Vector2Normalize(v Vector2) Vector2 {
-	return Vector2Scale(v, 1/Vector2Length(v))
+func Vector2Normalize[T Number](v Vector2[T]) Vector2[T] {
+	return Vector2Scale[T](v, 1/Vector2Length(v))
 }
 
 // Vector2Lerp - Calculate linear interpolation between two vectors
-func Vector2Lerp(v1, v2 Vector2, amount float32) Vector2 {
-	return NewVector2(v1.X+amount*(v2.X-v1.X), v1.Y+amount*(v2.Y-v1.Y))
+func Vector2Lerp[T Number](v1, v2 Vector2[T], amount float32) Vector2[T] {
+	return NewVector2[T](float32(v1.X)+amount*float32(v2.X-v1.X), float32(v1.Y)+amount*float32(v2.Y-v1.Y))
 }
 
 // Vector2CrossProduct - Calculate two vectors cross product
-func Vector2CrossProduct(v1, v2 Vector2) float32 {
-	return v1.X*v2.Y - v1.Y*v2.X
+func Vector2CrossProduct[T Number](v1, v2 Vector2[T]) float32 {
+	return float32(v1.X*v2.Y - v1.Y*v2.X)
 }
 
 // Vector2Cross - Calculate the cross product of a vector and a value
-func Vector2Cross(value float32, vector Vector2) Vector2 {
-	return NewVector2(-value*vector.Y, value*vector.X)
+func Vector2Cross[T Number](value float32, vector Vector2[T]) Vector2[T] {
+	return NewVector2[T](-value*float32(vector.Y), value*float32(vector.X))
 }
 
 // Vector2LenSqr - Returns the len square root of a vector
-func Vector2LenSqr(vector Vector2) float32 {
-	return vector.X*vector.X + vector.Y*vector.Y
+func Vector2LenSqr[T Number](vector Vector2[T]) float32 {
+	return float32(vector.X*vector.X + vector.Y*vector.Y)
 }
 
 // Mat2Radians - Creates a matrix 2x2 from a given radians value
@@ -115,8 +115,8 @@ func Mat2Transpose(matrix Mat2) Mat2 {
 }
 
 // Mat2MultiplyVector2 - Multiplies a vector by a matrix 2x2
-func Mat2MultiplyVector2(matrix Mat2, vector Vector2) Vector2 {
-	return NewVector2(matrix.M00*vector.X+matrix.M01*vector.Y, matrix.M10*vector.X+matrix.M11*vector.Y)
+func Mat2MultiplyVector2[T Number](matrix Mat2, vector Vector2[T]) Vector2[T] {
+	return NewVector2[T](matrix.M00*float32(vector.X)+matrix.M01*float32(vector.Y), matrix.M10*float32(vector.X)+matrix.M11*float32(vector.Y))
 }
 
 // Vector3Zero - Vector with components value 0.0

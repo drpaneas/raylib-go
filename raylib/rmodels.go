@@ -159,7 +159,7 @@ func DrawCylinderWires(position Vector3, radiusTop float32, radiusBottom float32
 }
 
 // DrawPlane - Draw a plane XZ
-func DrawPlane(centerPos Vector3, size Vector2, col color.RGBA) {
+func DrawPlane[T Number](centerPos Vector3, size Vector2[T], col color.RGBA) {
 	ccenterPos := centerPos.cptr()
 	csize := size.cptr()
 	ccolor := colorCptr(col)
@@ -481,7 +481,7 @@ func DrawBillboard(camera Camera, texture Texture2D, center Vector3, size float3
 }
 
 // DrawBillboardRec - Draw a billboard texture defined by sourceRec
-func DrawBillboardRec(camera Camera, texture Texture2D, sourceRec Rectangle, center Vector3, size Vector2, tint color.RGBA) {
+func DrawBillboardRec[T Number](camera Camera, texture Texture2D, sourceRec Rectangle, center Vector3, size Vector2[T], tint color.RGBA) {
 	ccamera := camera.cptr()
 	ctexture := texture.cptr()
 	csourceRec := sourceRec.cptr()
